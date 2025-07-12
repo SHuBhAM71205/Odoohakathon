@@ -90,16 +90,16 @@ export default function Login() {
                     <div className="flex justify-between bg-white p-1 rounded-full shadow-inner">
                         <button
                             type="button"
-                            className={`w-1/2 py-2 rounded-full font-semibold ${islogin ? 'bg-slate-800 text-white' : 'text-gray-600'}`}
-                            onClick={() => setisLogin(true)}
+                            className={`w-1/2 py-2 rounded-full font-semibold ${isLogin ? 'bg-slate-800 text-white' : 'text-gray-600'}`}
+                            onClick={() => setIsLogin(true)}
                         >
                             Login
                         </button>
                         <button
                             type="button"
-                            className={`w-1/2 py-2 rounded-full font-semibold ${!islogin ? 'bg-slate-800 text-white' : 'text-gray-600'}`}
+                            className={`w-1/2 py-2 rounded-full font-semibold ${!isLogin ? 'bg-slate-800 text-white' : 'text-gray-600'}`}
                             onClick={() => {
-                                setisLogin(false);
+                                setIsLogin(false);
                                 setCurrentUser("user");
                             }}
                         >
@@ -107,14 +107,14 @@ export default function Login() {
                         </button>
                     </div>
 
-                    {islogin ? (
+                    {isLogin ? (
                         <>
                             <h2 className="text-2xl font-bold text-gray-800 text-center">Login</h2>
 
                             <div>
                                 <label className="block text-gray-700 mb-2">User Role</label>
                                 <select
-                                    value={curentUser}
+                                    value={currentUser}
                                     onChange={(e) => setCurrentUser(e.target.value)}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >
@@ -156,7 +156,7 @@ export default function Login() {
                             <div>
                                 <label className="block text-gray-700 mb-2">User Role</label>
                                 <select
-                                    value={curentUser}
+                                    value={currentUser}
                                     onChange={(e) => setCurrentUser(e.target.value)}
                                     className="w-full px-4 py-2 border border-gray-300 rounded-full focus:outline-none focus:ring-2 focus:ring-blue-500"
                                 >

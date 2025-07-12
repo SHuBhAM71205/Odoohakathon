@@ -1,22 +1,21 @@
 import React ,{useState}from 'react'
 import { useAppContext } from "../../context/AppContext.jsx";
 import { useNavigate } from "react-router-dom";
-import { FaSignInAlt, FaHome, FaExchangeAlt } from "react-icons/fa";
+import { FaSignInAlt, FaExchangeAlt, FaUserAlt } from "react-icons/fa";
 import NavBar from "../General/NavBar.jsx";
-
 export default function LandingPage() {
   const { loggedInUser, isLoggedIn } = useAppContext();
   const navigate = useNavigate();
   const navigations = isLoggedIn
     ? [
-        { name: "Home", route: "/", icon: <FaHome /> },
-        { name: "Swap Requests", route: "/requests", icon: <FaExchangeAlt /> },
+        { name: "User", route: "/admin", icon: <FaUserAlt /> },
+        { name: "Swap Requests", route: "/admin/requests", icon: <FaExchangeAlt /> },
       ]
     : [{ name: "Login", route: "/login", icon: <FaSignInAlt /> }];
 
   return (
     <div className="h-screen w-screen flex flex-col bg-gray-600 overflow-x-hidden">
-      <NavBar navigations={navigations} role={"user"} title={"Skill Swap"} showuserimg={isLoggedIn} />
+      <NavBar navigations={navigations} role={"admin"} title={"Skill Swap"} showuserimg={isLoggedIn} />
       <Profile />
     </div>
   );

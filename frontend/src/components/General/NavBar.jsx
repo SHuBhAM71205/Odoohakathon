@@ -27,7 +27,7 @@ export default function NavBar({ role, navigations, title , showuserimg}) {
                             src={typeof showuserimg === 'string' ? showuserimg : '/default-user.png'}
                             alt="User"
                             className="w-10 h-10  rounded-full object-cover border-2 border-cyan-400"
-                            onClick={() => {nav('/profile')}}
+                            onClick={() => {nav(`${role==='admin'? "/admin": ""}/profile`)}}
                         />
                     )}
                 </div>

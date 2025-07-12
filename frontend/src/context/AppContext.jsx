@@ -4,7 +4,7 @@ const AppContext = createContext();
 export const AppProvider = ({ children }) => {
   const [user, setUser] = useState(null);       
   const [token, setToken] = useState(null);     
-  const [isLoggedIn, setIsLoggedIn] = useState(false); 
+  const [isLoggedIn, setIsLoggedIn] = useState(true); 
   const [role, setRole] = useState("user"); 
 
   useEffect(() => {

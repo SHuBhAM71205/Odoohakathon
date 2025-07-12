@@ -28,8 +28,9 @@ export default function LandingPage() {
 function Home2() {
   const navigate = useNavigate();
   const { loggedInUser, isLoggedIn } = useAppContext();
+  
   const dummyUsers = Array.from({ length: 50 }, (_, i) => ({
-    id: i,
+    id: i + 1,
     name: `User ${i + 1}`,
     profileImage: "",
     skillsOffered: ["HTML", "CSS", "React"][i % 3],
@@ -37,8 +38,6 @@ function Home2() {
     rating: (Math.random() * 2 + 3).toFixed(1),
     availability: i % 2 === 0 ? "public" : i % 3 === 0 ? "private" : "protected",
   }));
-
-  
 
   const [search, setSearch] = useState("");
   const [filterAvailability, setFilterAvailability] = useState("all");
@@ -77,7 +76,6 @@ function Home2() {
       return;
     }
     setSelectedUser(user);
-    console.log(user);
     setShowForm(true);
   }
 
@@ -86,12 +84,22 @@ function Home2() {
     setShowForm(false);
   }
 
+  function handleSubmitRequest(data) {
+    console.log('Request submitted:', {
+      recipient: selectedUser,
+      requestData: data
+    });
+    // Here you would typically send the request to your backend
+    alert(`Request sent to ${selectedUser.name} successfully!`);
+    closeForm();
+  }
+
   return (
     <>
       <div className="flex flex-col md:flex-row items-center h-auto md:h-12 justify-center m-2 bg-gray-500 md:justify-end mt-4 gap-3 md:gap-6 px-4 py-2 rounded-md shadow">
         <input
           type="text"
-          placeholder="Search..."
+          placeholder="Search users, skills..."
           className="px-3 py-1 rounded-md border border-gray-300 focus:outline-none focus:ring-2 focus:ring-red-300 w-full md:w-64"
           value={search}
           onChange={(e) => setSearch(e.target.value)}
@@ -101,7 +109,7 @@ function Home2() {
           value={filterAvailability}
           onChange={(e) => setFilterAvailability(e.target.value)}
         >
-          <option value="all">Availability</option>
+          <option value="all">All Availability</option>
           <option value="public">Public</option>
           <option value="private">Private</option>
           <option value="protected">Protected</option>
@@ -112,13 +120,9 @@ function Home2() {
         {usersToShow.map((user, i) => {
           const isLast = i === usersToShow.length - 1;
           return (
-            <div key={i} ref={isLast ? lastCardRef : null}>
+            <div key={user.id} ref={isLast ? lastCardRef : null}>
               <Card
-                name={user.name}
-                profileImage={user.profileImage}
-                skillsOffered={[user.skillsOffered]}
-                skillsWanted={[user.skillsWanted]}
-                rating={user.rating}
+                user={user}
                 onRequest={() => handleRequest(user)}
               />
             </div>
@@ -128,21 +132,15 @@ function Home2() {
           <p className="text-center text-white py-4 animate-pulse">Loading more...</p>
         )}
         {filtered.length === 0 && (
-          <p className="text-center text-gray-200 py-4">No users match the filter.</p>
+          <p className="text-center text-gray-200 py-4">No users match your search criteria.</p>
         )}
       </div>
 
       {showForm && selectedUser && (
         <RequestForm
-          recipient={selectedUser.name}
-          offeredSkills={[selectedUser.skillsOffered]}
-          wantedSkills={[selectedUser.skillsWanted]}
+          recipient={selectedUser}
           onClose={closeForm}
-          onSubmit={(data) => {
-            // You can handle the submitted data here (e.g., send to backend)
-            console.log('Request submitted:', data);
-            closeForm();
-          }}
+          onSubmit={handleSubmitRequest}
         />
       )}
     </>

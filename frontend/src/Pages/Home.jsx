@@ -77,6 +77,7 @@ function Home2() {
       return;
     }
     setSelectedUser(user);
+    console.log(user);
     setShowForm(true);
   }
 
@@ -137,6 +138,11 @@ function Home2() {
           offeredSkills={[selectedUser.skillsOffered]}
           wantedSkills={[selectedUser.skillsWanted]}
           onClose={closeForm}
+          onSubmit={(data) => {
+            // You can handle the submitted data here (e.g., send to backend)
+            console.log('Request submitted:', data);
+            closeForm();
+          }}
         />
       )}
     </>

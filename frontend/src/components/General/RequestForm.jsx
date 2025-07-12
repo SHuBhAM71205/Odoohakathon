@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 
-export default function RequestForm({ targetUser, offeredSkills, onClose, onSubmit }) {
+export default function RequestForm({ recipient, offeredSkills = [], wantedSkills = [], onClose, onSubmit }) {
   const [offered, setOffered] = useState("");
   const [wanted, setWanted] = useState("");
   const [message, setMessage] = useState("");
@@ -14,7 +14,7 @@ export default function RequestForm({ targetUser, offeredSkills, onClose, onSubm
     <div className="fixed inset-0 bg-gray-100/55 flex items-center justify-center z-50">
       <div className="bg-gray-800 text-white p-6 rounded-lg w-full max-w-md relative">
         <button className="absolute top-2 right-3 text-xl" onClick={onClose}>&times;</button>
-        <h2 className="text-xl mb-4 font-semibold">Send Request to {targetUser?.name}</h2>
+        <h2 className="text-xl mb-4 font-semibold">Send Request to {recipient}</h2>
 
         <label className="block mb-2">Your Offered Skill</label>
         <select className="w-full p-2 mb-4 bg-gray-700 rounded" value={offered} onChange={(e) => setOffered(e.target.value)}>
@@ -25,7 +25,7 @@ export default function RequestForm({ targetUser, offeredSkills, onClose, onSubm
         <label className="block mb-2">Their Wanted Skill</label>
         <select className="w-full p-2 mb-4 bg-gray-700 rounded" value={wanted} onChange={(e) => setWanted(e.target.value)}>
           <option value="">-- select --</option>
-          <option value={targetUser?.skillsWanted}>{targetUser?.skillsWanted}</option>
+          {wantedSkills.map((skill, i) => <option key={i} value={skill}>{skill}</option>)}
         </select>
 
         <label className="block mb-2">Message</label>

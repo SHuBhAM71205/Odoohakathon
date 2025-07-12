@@ -94,7 +94,7 @@ export default function Card({
 
       <div className="flex flex-col items-center md:items-end space-y-2">
         <button
-          onClick={() => onRequest(name, 1)}
+          onClick={() => {onRequest({ name,id:idx })}}
           className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-4 py-1 rounded-md shadow-md border-2 border-white w-full sm:w-auto"
         >
           Request

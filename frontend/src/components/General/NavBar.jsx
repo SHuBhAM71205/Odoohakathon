@@ -1,8 +1,9 @@
-import React from 'react';
-import { Link } from 'react-router-dom';
+import React, { use } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 
 
 export default function NavBar({ role, navigations, title , showuserimg}) {
+    const nav = useNavigate();
     return (
         <nav className="w-full bg-gray-800 text-white shadow-md sticky top-0 z-50 space-x-3 rounded-b-sm">
             <div className="mx-auto px-4 py-3 flex items-center justify-between space-x-4">
@@ -26,6 +27,7 @@ export default function NavBar({ role, navigations, title , showuserimg}) {
                             src={typeof showuserimg === 'string' ? showuserimg : '/default-user.png'}
                             alt="User"
                             className="w-10 h-10  rounded-full object-cover border-2 border-cyan-400"
+                            onClick={() => {nav('/profile')}}
                         />
                     )}
                 </div>

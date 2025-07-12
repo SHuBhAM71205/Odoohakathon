@@ -59,12 +59,6 @@ export default function Card({
                 <span className="text-gray-300">Rating:</span> {rating}/5
               </p>
 
-              <button
-          onClick={() => onRequest(name, 1)}
-          className="bg-cyan-600 hover:bg-cyan-700 text-white font-medium px-4 py-1 rounded-md shadow-md border-2 border-white w-full sm:w-auto"
-        >
-          Request
-        </button>
             </div>
           )}
         </div>

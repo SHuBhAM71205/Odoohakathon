@@ -38,6 +38,8 @@ function Home2() {
     availability: i % 2 === 0 ? "public" : i % 3 === 0 ? "private" : "protected",
   }));
 
+  
+
   const [search, setSearch] = useState("");
   const [filterAvailability, setFilterAvailability] = useState("all");
   const [loadIndex, setLoadIndex] = useState(5);

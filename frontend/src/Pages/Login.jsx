@@ -3,79 +3,84 @@ import { useAppContext } from "../context/AppContext";
 import { useNavigate } from "react-router-dom";
 
 export default function Login() {
-    const [email, setEmail] = useState("");
+ const [email, setEmail] = useState("");
     const [password, setPassword] = useState("");
-    const {
-               
-        setUser,
-        setToken,
-        setIsLoggedIn,
-    } = useAppContext();
-    const [curentUser, setCurrentUser] = useState("user");
-    const [islogin, setisLogin] = useState(true);
     const [username, setUsername] = useState("");
-    
+    const [currentUser, setCurrentUser] = useState("user"); // "user" or "admin"
+    const [isLogin, setIsLogin] = useState(true);
+
+    const {
+        login,
+        logout,
+        setRole, // optional if not using inside login()
+    } = useAppContext();
+
     const navigate = useNavigate();
 
     const handleSubmit = (e) => {
         e.preventDefault();
+        isLogin ? handleLogin() : handleSignup();
+    };
 
-        if (islogin) {
-            handleLogin();
-        } else {
-            handelSignup();
-        }
-    }
-    // In AppContext.js
-    const loginUser = async ({ email, password, role }) => {
+    const handleLogin = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/${role}/login`, {
+            const response = await fetch(`http://localhost:3000/api/${currentUser}/login`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
+                headers: {
+                    "Content-Type": "application/json",
+                },
                 body: JSON.stringify({ email, password }),
             });
 
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.message || "Login failed");
+            const data = await response.json();
+
+            if (response.ok) {
+                login({
+                    id: data.user.id,
+                    name: data.user.name,
+                    token: data.token,
+                    role: currentUser,
+                });
+
+                navigate(currentUser === "admin" ? "/admin/dashboard" : "/user/home");
+            } else {
+                alert(data.message || "Login failed");
             }
-
-            const data = await res.json();
-            const userData = { id: data.id, name: data.username, email: data.email, role };
-
-            setUser(userData);
-            setToken(data.token || "sample_token"); // Use real token if available
-            setIsLoggedIn(true);
-
-            localStorage.setItem("user", JSON.stringify(userData));
-            localStorage.setItem("token", data.token || "sample_token");
-
-            return { success: true };
-        } catch (error) {
-            return { success: false, message: error.message };
+        } catch (err) {
+            console.error("Login Error:", err);
+            alert("An error occurred during login.");
         }
     };
 
-    const signupUser = async ({ email, password, username, role }) => {
+    const handleSignup = async () => {
         try {
-            const res = await fetch(`http://localhost:3000/api/${role}/signup`, {
+            const response = await fetch(`http://localhost:3000/api/${currentUser}/signup`, {
                 method: "POST",
-                headers: { "Content-Type": "application/json" },
-                body: JSON.stringify({ email, password, username }),
+                headers: {
+                    "Content-Type": "application/json",
+                },
+                body: JSON.stringify({ username, email, password }),
             });
 
-            if (!res.ok) {
-                const errorData = await res.json();
-                throw new Error(errorData.message || "Signup failed");
-            }
+            const data = await response.json();
 
-            const data = await res.json();
-            return { success: true, data };
-        } catch (error) {
-            return { success: false, message: error.message };
+            if (response.ok) {
+                login({
+                    id: data.user.id,
+                    name: data.user.name,
+                    token: data.token,
+                    role: currentUser,
+                });
+
+                navigate(currentUser === "admin" ? "/admin/dashboard" : "/user/home");
+            } else {
+                alert(data.message || "Signup failed");
+            }
+        } catch (err) {
+            console.error("Signup Error:", err);
+            alert("An error occurred during signup.");
         }
     };
-
 
     return (
 

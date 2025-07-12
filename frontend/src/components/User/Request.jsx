@@ -1,11 +1,9 @@
 // pages/RequestList.jsx
 import React, { useState } from "react";
 import RequestCard from "../General/RequestCard.jsx";
-
 import { useNavigate } from "react-router-dom";
 import NavBar from "../General/NavBar";
 import { FaSignInAlt,FaHome,FaExchangeAlt } from "react-icons/fa";
-
 import { useAppContext } from "../../context/AppContext.jsx";
 
 export default function LandingPage() {
@@ -27,6 +25,7 @@ export default function LandingPage() {
         </div>
     );
 }
+
 function RequestList() {
   const [search, setSearch] = useState("");
   const [statusFilter, setStatusFilter] = useState("Pending");

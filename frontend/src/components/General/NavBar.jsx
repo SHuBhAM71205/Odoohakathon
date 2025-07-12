@@ -2,10 +2,10 @@ import React from 'react';
 import { Link } from 'react-router-dom';
 
 
-export default function NavBar({ role, navigations, title ,isLoggedIn}) {
+export default function NavBar({ role, navigations, title , showuserimg}) {
     return (
-        <nav className="w-full bg-gray-800 text-white shadow-md sticky top-0 z-50 rounded-b-sm">
-            <div className=" mx-auto px-4 py-3 flex items-center justify-between">
+        <nav className="w-full bg-gray-800 text-white shadow-md sticky top-0 z-50 space-x-3 rounded-b-sm">
+            <div className="mx-auto px-4 py-3 flex items-center justify-between space-x-4">
                 <h1 className="text-2xl font-semibold tracking-wide">{title || role}</h1>
                 <ul className="flex flex-1 justify-end space-x-6">
                     {navigations.map((nav, idx) => (
@@ -20,6 +20,15 @@ export default function NavBar({ role, navigations, title ,isLoggedIn}) {
                         </li>
                     ))}
                 </ul>
+                <div className='flex items-center space-x-2'>
+                    {showuserimg && (
+                        <img
+                            src={typeof showuserimg === 'string' ? showuserimg : '/default-user.png'}
+                            alt="User"
+                            className="w-10 h-10  rounded-full object-cover border-2 border-cyan-400"
+                        />
+                    )}
+                </div>
             </div>
         </nav>
     );

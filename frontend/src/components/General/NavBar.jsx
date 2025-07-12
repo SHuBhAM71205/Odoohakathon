@@ -5,9 +5,9 @@ import { Link, useNavigate } from 'react-router-dom';
 export default function NavBar({ role, navigations, title , showuserimg}) {
     const nav = useNavigate();
     return (
-        <nav className="w-full bg-gray-800 text-white shadow-md sticky top-0 z-50 space-x-3 rounded-b-sm">
-            <div className="mx-auto px-4 py-3 flex items-center justify-between space-x-4">
-                <h1 className="text-2xl font-semibold tracking-wide">{title || role}</h1>
+        <nav className="w-full  bg-gray-800 text-white shadow-md sticky top-0 z-50 space-x-3 rounded-b-sm">
+            <div className="mx-auto px-4 py-3 flex items-center justify-between space-x-4 flex-col md:flex-row">
+                <h1 className="text-2xl font-semibold tracking-wide ">{title || role}</h1>
                 <ul className="flex flex-1 justify-end space-x-6">
                     {navigations.map((nav, idx) => (
                         <li key={idx}>
